@@ -1,5 +1,6 @@
 package com.jtorres.prueba_autos.controller;
 
+import com.jtorres.prueba_autos.dto.AutoDTO;
 import com.jtorres.prueba_autos.dto.UserDTO;
 import com.jtorres.prueba_autos.entity.Auto;
 import com.jtorres.prueba_autos.entity.User;
@@ -38,28 +39,34 @@ public class Controller {
     }
 
     @GetMapping("/users/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Integer id) {
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Integer id) {
         Optional<User> user = userRepository.findById(id);
-        return user.map(ResponseEntity::ok)
+        return user.map(u -> ResponseEntity.ok(new UserDTO(u)))
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/autos")
-    public ResponseEntity<List<Auto>> getAllAutos() {
+    public ResponseEntity<List<AutoDTO>> getAllAutos() {
         List<Auto> autos = autoRepository.findAll();
-        return ResponseEntity.ok(autos);
+        List<AutoDTO> dtos = autos.stream()
+                .map(AutoDTO::new)
+                .toList();
+        return ResponseEntity.ok(dtos);
     }
 
     @GetMapping("/autos/{placa}")
-    public ResponseEntity<Auto> getAutoByPlaca(@PathVariable String placa) {
+    public ResponseEntity<AutoDTO> getAutoByPlaca(@PathVariable String placa) {
         Optional<Auto> auto = autoRepository.findById(placa);
-        return auto.map(ResponseEntity::ok)
+        return auto.map(a -> ResponseEntity.ok(new AutoDTO(a)))
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/users/{userId}/autos")
-    public ResponseEntity<List<Auto>> getAutosByUserId(@PathVariable Integer userId) {
+    public ResponseEntity<List<AutoDTO>> getAutosByUserId(@PathVariable Integer userId) {
         List<Auto> autos = autoRepository.findByUserId(userId);
-        return ResponseEntity.ok(autos);
+        List<AutoDTO> dtos = autos.stream()
+                .map(AutoDTO::new)
+                .toList();
+        return ResponseEntity.ok(dtos);
     }
 }

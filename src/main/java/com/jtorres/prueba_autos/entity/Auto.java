@@ -13,8 +13,8 @@ import java.time.LocalDate;
 public class Auto {
 
     @Id
+    @Getter
     private String placa;
-
     @Column(nullable = false)
     private String marca;
     @Column(nullable = false)
