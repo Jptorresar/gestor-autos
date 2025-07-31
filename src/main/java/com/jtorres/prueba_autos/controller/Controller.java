@@ -6,6 +6,7 @@ import com.jtorres.prueba_autos.entity.Auto;
 import com.jtorres.prueba_autos.entity.User;
 import com.jtorres.prueba_autos.repository.AutoRepository;
 import com.jtorres.prueba_autos.repository.UserRepository;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,11 @@ public class Controller {
 
     @Autowired
     private AutoRepository autoRepository;
+
+    @RequestMapping(value = "/**", method = RequestMethod.OPTIONS)
+    public ResponseEntity<?> handleOptions() {
+        return ResponseEntity.ok().build();
+    }
 
     @GetMapping("/")
     public ResponseEntity<String> home() {
@@ -68,5 +74,11 @@ public class Controller {
                 .map(AutoDTO::new)
                 .toList();
         return ResponseEntity.ok(dtos);
+    }
+
+    @PostConstruct
+    public void verificarUsuarios() {
+        System.out.println("Usuarios en base de datos:");
+        userRepository.findAll().forEach(user -> System.out.println(user.getUsername()));
     }
 }

@@ -1,9 +1,9 @@
 DELETE FROM auto;
 DELETE FROM users;
 
-INSERT INTO users (username, email, password, created_at) VALUES('juan', 'juan@email.com', '1234', CURRENT_TIMESTAMP);
-INSERT INTO users (username, email, password, created_at) VALUES('daniel', 'daniel@email.com', '4321', CURRENT_TIMESTAMP);
-INSERT INTO users (username, email, password, created_at) VALUES('maria', 'maria@email.com', '1221', CURRENT_TIMESTAMP);
+INSERT INTO users (username, email, password, created_at) VALUES('juan', 'juan@email.com', '$2a$10$QsGjxOoH2Rs3uziTC9peS.s7wbReyDwPnPeGtpxqIukymKx7.baI.', CURRENT_TIMESTAMP);
+INSERT INTO users (username, email, password, created_at) VALUES('daniel', 'daniel@email.com', '$2a$10$rIfmk6nrJXInELSUehB1R.g7anD4hcqsFa1acyUEF6liRhc6oV9nq', CURRENT_TIMESTAMP);
+INSERT INTO users (username, email, password, created_at) VALUES('maria', 'maria@email.com', '$2a$10$yM/.XB7DUvWSi5b.6KpoxOI3cNiC0QrRfmq3qJDJ9JUMYT.y.kc6O', CURRENT_TIMESTAMP);
 
 INSERT INTO auto (placa, user_id, marca, modelo, year, color, created_at)
 SELECT 'ABC123', id, 'Toyota', 'Corolla', 2020, 'Rojo', CURRENT_TIMESTAMP
