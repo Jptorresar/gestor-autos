@@ -15,7 +15,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -69,7 +71,7 @@ public class AutoController {
     @PostMapping("/")
     public ResponseEntity<AutoDTO> createAuto(@RequestBody AutoDTO autoDto, HttpServletRequest request) {
         User user = getAuthenticatedUser(request);
-        Auto auto = autoDto.toAuto(autoDto);
+        Auto auto = autoDto.toAuto();
         auto.setUser(user);
         Auto savedAuto = autoRepository.save(auto);
         return ResponseEntity.ok(new AutoDTO(savedAuto));
@@ -111,6 +113,9 @@ public class AutoController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No puedes eliminar este auto");
         }
         autoRepository.delete(auto);
-        return ResponseEntity.ok().build();
+        String mensaje = "Auto con placa " + placa + " eliminado correctamente";
+        Map<String, String> response = new HashMap<>();
+        response.put("message", mensaje);
+        return ResponseEntity.ok(response);
     }
 }

@@ -1,8 +1,11 @@
 package com.jtorres.prueba_autos.dto;
 
 import com.jtorres.prueba_autos.entity.Auto;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Getter
 public class AutoDTO {
     private String placa;
@@ -19,13 +22,13 @@ public class AutoDTO {
         this.color = auto.getColor();
     }
 
-    public Auto toAuto(AutoDTO autoDTO) {
+    public Auto toAuto() {
         Auto auto = new Auto();
-        auto.setPlaca(autoDTO.getPlaca());
-        auto.setModelo(autoDTO.getModelo());
-        auto.setMarca(autoDTO.getMarca());
-        auto.setYear(autoDTO.getYear());
-        auto.setColor(autoDTO.getColor());
+        auto.setPlaca(this.placa);
+        auto.setModelo(this.modelo);
+        auto.setMarca(this.marca);
+        auto.setYear(this.year);
+        auto.setColor(this.color);
         return auto;
     }
 }
