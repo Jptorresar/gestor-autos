@@ -18,4 +18,14 @@ public class AutoDTO {
         this.year = auto.getYear();
         this.color = auto.getColor();
     }
+
+    public Auto toAuto(AutoDTO autoDTO) {
+        Auto auto = new Auto();
+        auto.setPlaca(autoDTO.getPlaca());
+        auto.setModelo(autoDTO.getModelo());
+        auto.setMarca(autoDTO.getMarca());
+        auto.setYear(autoDTO.getYear());
+        auto.setColor(autoDTO.getColor());
+        return auto;
+    }
 }

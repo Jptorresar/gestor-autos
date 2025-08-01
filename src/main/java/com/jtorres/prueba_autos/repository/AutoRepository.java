@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface AutoRepository extends JpaRepository<Auto, String> {
 
-    List<Auto> findByUser(User user);
+    List<Auto> findByUser(User User);
 
     List<Auto> findByUserId(Integer userId);
 

@@ -51,31 +51,6 @@ public class Controller {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/autos")
-    public ResponseEntity<List<AutoDTO>> getAllAutos() {
-        List<Auto> autos = autoRepository.findAll();
-        List<AutoDTO> dtos = autos.stream()
-                .map(AutoDTO::new)
-                .toList();
-        return ResponseEntity.ok(dtos);
-    }
-
-    @GetMapping("/autos/{placa}")
-    public ResponseEntity<AutoDTO> getAutoByPlaca(@PathVariable String placa) {
-        Optional<Auto> auto = autoRepository.findById(placa);
-        return auto.map(a -> ResponseEntity.ok(new AutoDTO(a)))
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @GetMapping("/users/{userId}/autos")
-    public ResponseEntity<List<AutoDTO>> getAutosByUserId(@PathVariable Integer userId) {
-        List<Auto> autos = autoRepository.findByUserId(userId);
-        List<AutoDTO> dtos = autos.stream()
-                .map(AutoDTO::new)
-                .toList();
-        return ResponseEntity.ok(dtos);
-    }
-
     @PostConstruct
     public void verificarUsuarios() {
         System.out.println("Usuarios en base de datos:");
