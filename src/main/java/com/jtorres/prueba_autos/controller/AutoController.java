@@ -30,8 +30,6 @@ public class AutoController {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private JwtUtil jwtUtil;
 
     private User getAuthenticatedUser(HttpServletRequest request) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

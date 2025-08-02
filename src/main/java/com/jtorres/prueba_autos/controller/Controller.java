@@ -1,8 +1,6 @@
 package com.jtorres.prueba_autos.controller;
 
-import com.jtorres.prueba_autos.dto.AutoDTO;
 import com.jtorres.prueba_autos.dto.UserDTO;
-import com.jtorres.prueba_autos.entity.Auto;
 import com.jtorres.prueba_autos.entity.User;
 import com.jtorres.prueba_autos.repository.AutoRepository;
 import com.jtorres.prueba_autos.repository.UserRepository;
@@ -21,9 +19,6 @@ public class Controller {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private AutoRepository autoRepository;
 
     @RequestMapping(value = "/**", method = RequestMethod.OPTIONS)
     public ResponseEntity<?> handleOptions() {

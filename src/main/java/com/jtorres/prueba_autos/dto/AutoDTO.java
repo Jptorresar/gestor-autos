@@ -1,7 +1,6 @@
 package com.jtorres.prueba_autos.dto;
 
 import com.jtorres.prueba_autos.entity.Auto;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

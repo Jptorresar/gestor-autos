@@ -15,8 +15,7 @@ import java.util.function.Function;
 @Component
 public class JwtUtil {
 
-    private final String SECRET_KEY = "misuperclavequeesmuylargaysegurayfuncionadeunavezmalditasea1234"; // >= 256 bits (32+ caracteres)
-
+    private final String SECRET_KEY = "misuperclavequeesmuylargaysegurayfuncionadeunavezmalditasea1234";
     private final SecretKey key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
 
     private final long EXPIRATION_TIME = 1000 * 60 * 60 * 10; // 10 horas
@@ -26,7 +25,7 @@ public class JwtUtil {
                 .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(key, SignatureAlgorithm.HS256) // usa la clave segura correctamente
+                .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
 
