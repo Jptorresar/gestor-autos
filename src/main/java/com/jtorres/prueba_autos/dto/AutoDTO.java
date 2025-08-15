@@ -21,13 +21,13 @@ public class AutoDTO {
         this.color = auto.getColor();
     }
 
-    public Auto toAuto() {
+    public Auto toAuto(AutoDTO autoDTO) {
         Auto auto = new Auto();
-        auto.setPlaca(this.placa);
-        auto.setModelo(this.modelo);
-        auto.setMarca(this.marca);
-        auto.setYear(this.year);
-        auto.setColor(this.color);
+        auto.setPlaca(autoDTO.getPlaca());
+        auto.setModelo(autoDTO.getModelo());
+        auto.setMarca(autoDTO.getMarca());
+        auto.setYear(autoDTO.getYear());
+        auto.setColor(autoDTO.getColor());
         return auto;
     }
 }

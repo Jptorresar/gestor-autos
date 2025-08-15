@@ -69,7 +69,7 @@ public class AutoController {
     @PostMapping("/")
     public ResponseEntity<AutoDTO> createAuto(@RequestBody AutoDTO autoDto, HttpServletRequest request) {
         User user = getAuthenticatedUser(request);
-        Auto auto = autoDto.toAuto();
+        Auto auto = autoDto.toAuto(autoDto);
         auto.setUser(user);
         Auto savedAuto = autoRepository.save(auto);
         return ResponseEntity.ok(new AutoDTO(savedAuto));
