@@ -39,13 +39,6 @@ public class Controller {
         return ResponseEntity.ok(dtos);
     }
 
-    @GetMapping("/users/{id}")
-    public ResponseEntity<UserDTO> getUserById(@PathVariable Integer id) {
-        Optional<User> user = userRepository.findById(id);
-        return user.map(u -> ResponseEntity.ok(new UserDTO(u)))
-                .orElse(ResponseEntity.notFound().build());
-    }
-
     @PostConstruct
     public void verificarUsuarios() {
         System.out.println("Usuarios en base de datos:");

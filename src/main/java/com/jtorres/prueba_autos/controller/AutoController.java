@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -31,7 +32,7 @@ public class AutoController {
     private UserRepository userRepository;
 
 
-    private User getAuthenticatedUser(HttpServletRequest request) {
+    private User getAuthenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         return userRepository.findByUsername(username)
@@ -57,18 +58,20 @@ public class AutoController {
     }
 
     //Obtener los autos del usuario logueado
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/")
-    public ResponseEntity<List<AutoDTO>> getUserAutos(HttpServletRequest request) {
-        User user = getAuthenticatedUser(request);
+    public ResponseEntity<List<AutoDTO>> getUserAutos() {
+        User user = getAuthenticatedUser();
         List<Auto> autos = autoRepository.findByUser(user);
         List<AutoDTO> dtos = autos.stream().map(AutoDTO::new).toList();
         return ResponseEntity.ok(dtos);
     }
 
     //Crear un auto para el usuario logueado
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/")
-    public ResponseEntity<AutoDTO> createAuto(@RequestBody AutoDTO autoDto, HttpServletRequest request) {
-        User user = getAuthenticatedUser(request);
+    public ResponseEntity<AutoDTO> createAuto(@RequestBody AutoDTO autoDto) {
+        User user = getAuthenticatedUser();
         Auto auto = autoDto.toAuto(autoDto);
         auto.setUser(user);
         Auto savedAuto = autoRepository.save(auto);
@@ -76,9 +79,10 @@ public class AutoController {
     }
 
     // Actualizar un auto segun su placa
+    @PreAuthorize("isAuthenticated()")
     @PutMapping("/{placa}")
-    public ResponseEntity<?> updateAuto(@PathVariable String placa, @RequestBody AutoDTO autoDto, HttpServletRequest request) {
-        User user = getAuthenticatedUser(request);
+    public ResponseEntity<?> updateAuto(@PathVariable String placa, @RequestBody AutoDTO autoDto) {
+        User user = getAuthenticatedUser();
         Optional<Auto> optionalAuto = autoRepository.findById(placa);
         if (optionalAuto.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -99,9 +103,10 @@ public class AutoController {
     }
 
     // Borrar un auto
+    @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/{placa}")
-    public ResponseEntity<?> deleteAuto(@PathVariable String placa, HttpServletRequest request) {
-        User user = getAuthenticatedUser(request);
+    public ResponseEntity<?> deleteAuto(@PathVariable String placa) {
+        User user = getAuthenticatedUser();
         Optional<Auto> optionalAuto = autoRepository.findById(placa);
         if (optionalAuto.isEmpty()) {
             return ResponseEntity.notFound().build();
