@@ -12,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -25,6 +26,8 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     private User getAuthenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -47,7 +50,11 @@ public class UserController {
     @PostMapping("/")
     public ResponseEntity<UserDTO> createUser(@RequestBody UserCreateDTO userDto) {
         User user = userDto.toUser(userDto);
+        //Hashear la contraseña antes de guardar
+        String hashedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(hashedPassword);
         User savedUser = userRepository.save(user);
+        System.out.println("Usuario creado");
         return ResponseEntity.ok(new UserDTO(savedUser));
     }
 
